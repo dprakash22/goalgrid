@@ -53,6 +53,67 @@ const api = {
     }
     return response.json();
   },
+
+  handleUpdate : async(todo) => {
+    // const token = Cookies.get('authToken');
+    try {
+      // console.log(todo.title,"this is textinput")
+
+        const response = await fetch(`${BASE_URL}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                id: todo.Id,
+                title : todo.title,
+                description: todo.description,
+                completed : todo.completed,
+            }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            // onUpdate();
+            alert(data.message);
+        } else {
+            alert('Failed to update todo');
+        }
+    } catch (error) {
+        console.error('Error updating todo:', error);
+        alert('Error updating todo');
+    }
+  },
+
+
+  handleDelete: async (todoId) => {
+    try {
+        const res = await fetch(`${BASE_URL}/${todoId}`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include', // Include credentials like cookies if necessary
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to delete todo');
+        }
+
+        const data = await res.json();
+        alert(data.message); // Show success message
+        // Optionally, update the UI to reflect the deletion
+    } catch (err) {
+        console.error('Error deleting todo:', err);
+        alert('Error deleting todo');
+    }
+},
+
+
 };
+
+
 
 export default api;

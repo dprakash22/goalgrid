@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Todo from '../components/todo';
+import Todo from '../components/Todo';
 import Createtodo from '../components/Createtodo';
 import api from '../services/api'; // Import the API service
 import Cookies from 'js-cookie';
@@ -54,9 +54,11 @@ function Todoapp() {
         {todos.map((todo) => (
           <Todo
             // key={todo.id}
-            // id={todo.id}
+            id={todo.ID}
+            fetchfun={fetchTodos}
             title={todo.Title}
             description={todo.Description}
+            completion={todo.Completed}
           />
         ))}
       </div>
